@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavy Cuts Barber</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888888;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes clipperBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(4px); }
+        }
+
+        .animate-hero-eyebrow { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+        .animate-hero-headline { animation: fadeInUp 1s ease-out 0.2s forwards; opacity: 0; }
+        .animate-hero-subtext { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .animate-hero-cta { animation: fadeInUp 0.8s ease-out 0.3s forwards; opacity: 0; }
+        .animate-hero-trust { animation: fadeInUp 1s ease-out 0.4s forwards; opacity: 0; }
+        .animate-hero-image { animation: scaleIn 1.5s ease-out forwards; opacity: 0; }
+        .animate-clipper { animation: clipperBounce 0.1s ease-in-out infinite alternate; }
+        
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .reveal-scale.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .font-display {
+            font-family: 'Syncopate', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-['Montserrat',sans-serif] overflow-x-hidden selection:bg-white selection:text-black">
+    
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-[600ms] ease-in-out opacity-100">
+        <div class="animate-clipper text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="7" y="7" width="10" height="14" rx="2" />
+                <path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3" />
+                <path d="M9 3v4" />
+                <path d="M12 3v4" />
+                <path d="M15 3v4" />
+                <path d="M12 21v3" />
+            </svg>
+        </div>
+        <div class="mt-6 font-display text-xl tracking-widest uppercase text-white">Wavy Cuts</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full overflow-hidden bg-black flex items-center justify-center">
+                    <img 
+                        src="https://i.postimg.cc/wTCR8BHZ/gemini-3-1-flash-image-preview-(nano-banana-2)-a-put-a-lack-backgroun.png" 
+                        alt="Wavy Cuts Logo" 
+                        class="w-full h-full object-cover"
+                        referrerpolicy="no-referrer"
+                    />
+                </div>
+                <div class="font-display font-bold text-xl tracking-wider uppercase">Wavy Cuts</div>
+            </div>
+            <a href="https://www.instagram.com/wavymax.barber" target="_blank" rel="noopener noreferrer" class="text-sm font-medium hover:text-white transition-colors duration-300">
+                Book Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+            <img 
+                id="hero-image"
+                src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop" 
+                alt="Barber cutting hair" 
+                class="opacity-0 w-full h-full object-cover object-center"
+                referrerpolicy="no-referrer"
+            />
+        </div>
+
+        <div class="relative z-20 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div class="max-w-2xl w-full">
+                <p id="hero-eyebrow" class="opacity-0 text-white font-medium tracking-widest uppercase text-sm mb-6 flex items-center gap-2">
+                    <span class="w-8 h-px bg-white"></span>
+                    Ottawa Barber
+                </p>
+                <h1 id="hero-headline" class="opacity-0 font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight mb-6">
+                    Clean Cuts.<br />Sharp Presence.
+                </h1>
+                <p id="hero-subtext" class="opacity-0 text-[#888888] text-lg md:text-xl max-w-lg mb-10 leading-relaxed">
+                    Solo barber offering detailed, modern grooming in Ottawa. A refined experience tailored for the modern man.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-12">
+                    <a id="hero-cta-btn" href="https://www.instagram.com/wavymax.barber" target="_blank" rel="noopener noreferrer" class="opacity-0 inline-flex items-center justify-center px-8 py-4 bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 rounded-sm group">
+                        Book Now
+                        <i data-lucide="arrow-right" class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <div id="hero-cta-text" class="opacity-0 flex flex-col">
+                        <span class="text-sm text-[#888888] mb-1">Questions? Call or text</span>
+                        <a href="tel:6134008424" class="text-lg font-medium hover:text-white transition-colors">
+                            613-400-8424
+                        </a>
+                    </div>
+                </div>
+
+                <div id="hero-trust" class="opacity-0 flex items-center gap-3 text-sm text-[#888888] border-l-2 border-white/10 pl-4">
+                    <i data-lucide="clock" class="w-4 h-4 text-white"></i>
+                    <span>Tuesday–Sunday &middot; 2pm–8pm</span>
+                </div>
+            </div>
+            
+            <div id="particle-container" class="w-full lg:w-1/2 hidden md:block opacity-80 hover:opacity-100 transition-opacity duration-500" style="visibility: hidden;">
+                <div class="flex flex-col items-center justify-center w-full">
+                    <canvas id="particle-canvas" class="w-full h-auto max-w-full" style="aspect-ratio: 2/1;"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About Section -->
+    <section class="about-section py-16 md:py-32 bg-[#111111]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                <div class="order-2 md:order-1">
+                    <div class="reveal-scale relative aspect-[4/5] w-full max-w-md mx-auto md:mx-0 overflow-hidden rounded-sm">
+                        <img 
+                            src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=1974&auto=format&fit=crop" 
+                            alt="Portrait of the barber" 
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                            referrerpolicy="no-referrer"
+                        />
+                        <div class="absolute inset-0 border border-white/10 m-4 rounded-sm pointer-events-none"></div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 reveal-up">
+                    <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">Your Ottawa Barber</h2>
+                    <div class="space-y-6 text-[#888888] text-lg leading-relaxed">
+                        <p>
+                            I believe a great haircut is more than just a service—it's a foundation for confidence. As a solo professional, I focus entirely on the details, ensuring every cut is executed with precision and consistency.
+                        </p>
+                        <p>
+                            My approach is simple: modern styles, clean lines, and a relaxed, unhurried environment. No crowded waiting areas, no rushed appointments. Just you, the chair, and a commitment to quality grooming.
+                        </p>
+                        <p class="text-white font-medium pt-4">
+                            Experience the difference of dedicated, one-on-one barbering.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Services Section -->
+    <section class="py-16 md:py-32 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12 md:mb-16 reveal-up">
+                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6">Premium Services</h2>
+                <p class="text-[#888888] text-lg">Detailed grooming tailored to your style. Every service includes a consultation and precise execution.</p>
+            </div>
+
+            <div class="services-list max-w-4xl mx-auto" id="services-container">
+                <!-- Services will be injected via JS or hardcoded below -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Before & After Section -->
+    <section class="py-16 md:py-32 bg-[#111111]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12 md:mb-16 reveal-up">
+                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight break-words hyphens-auto">The Transformation</h2>
+                <p class="text-[#888888] text-lg">Precision and detail in every cut.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                <div class="reveal-up relative group rounded-sm overflow-hidden border border-white/10">
+                    <img 
+                        src="https://i.postimg.cc/3Jq7THK2/Screenshot-2026-03-12-at-8-21-09-PM.png" 
+                        alt="Before haircut" 
+                        class="w-full h-[300px] sm:h-[400px] md:h-[600px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        referrerpolicy="no-referrer"
+                    />
+                    <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-sm px-4 py-2 text-sm font-medium tracking-widest uppercase rounded-sm border border-white/10">
+                        Before
+                    </div>
+                </div>
+                
+                <div class="reveal-up relative group rounded-sm overflow-hidden border border-white/10" style="transition-delay: 0.2s;">
+                    <img 
+                        src="https://i.postimg.cc/FKyQ3djt/Screenshot-2026-03-12-at-8-21-38-PM.png" 
+                        alt="After haircut" 
+                        class="w-full h-[300px] sm:h-[400px] md:h-[600px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        referrerpolicy="no-referrer"
+                    />
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-black px-4 py-2 text-sm font-bold tracking-widest uppercase rounded-sm">
+                        After
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Booking CTA Section -->
+    <section id="book" class="booking-section py-16 md:py-32 bg-black relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+        
+        <div class="reveal-up relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <i data-lucide="scissors" class="w-12 h-12 text-white mx-auto mb-6 md:mb-8 opacity-80"></i>
+            <h2 class="font-display text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 tracking-tight">Book Your Appointment</h2>
+            <p class="text-[#888888] text-lg md:text-xl mb-8 md:mb-10 max-w-2xl mx-auto">
+                Click "Book Now" to schedule your appointment. For questions, call or text <a href="tel:6134008424" class="text-white hover:text-white transition-colors whitespace-nowrap">613-400-8424</a>.
+            </p>
+            <a href="https://www.instagram.com/wavymax.barber" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 bg-white text-black font-bold text-lg hover:bg-gray-200 transition-colors duration-300 rounded-sm shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                Book Now
+            </a>
+        </div>
+    </section>
+
+    <!-- 6. Hours and Location Section -->
+    <section class="py-16 md:py-32 bg-[#111111] border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16">
+                <div class="reveal-up">
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold mb-8 md:mb-10">Visit the Shop</h2>
+                    
+                    <div class="space-y-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#111111] flex items-center justify-center shrink-0 border border-white/5">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Location</h3>
+                                <p class="text-[#888888] leading-relaxed">
+                                    1792 Bank St<br />
+                                    Ottawa, Ontario
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#111111] flex items-center justify-center shrink-0 border border-white/5">
+                                <i data-lucide="clock" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Operating Hours</h3>
+                                <p class="text-[#888888] leading-relaxed">
+                                    Tuesday – Sunday<br />
+                                    2:00 PM – 8:00 PM
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#111111] flex items-center justify-center shrink-0 border border-white/5">
+                                <i data-lucide="phone" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Contact</h3>
+                                <p class="text-[#888888] leading-relaxed">
+                                    <a href="tel:6134008424" class="hover:text-white transition-colors">613-400-8424</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-scale h-[300px] sm:h-[400px] md:h-auto min-h-[300px] relative rounded-sm overflow-hidden border border-white/10 group bg-[#111111]">
+                    <iframe
+                        src="https://maps.google.com/maps?q=1792%20Bank%20St,%20Ottawa,%20Ontario&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="100%"
+                        style="border: 0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="absolute inset-0 w-full h-full grayscale invert contrast-125 opacity-80 group-hover:opacity-100 transition-all duration-700"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Footer -->
+    <footer class="py-12 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+                <div>
+                    <div class="font-display font-bold text-xl tracking-wider uppercase mb-2">Wavy Cuts</div>
+                    <p class="text-[#888888] text-sm">1792 Bank St, Ottawa</p>
+                </div>
+                
+                <div class="text-[#888888] text-sm flex flex-col sm:flex-row items-center gap-2 sm:gap-0">
+                    <a href="tel:6134008424" class="hover:text-white transition-colors">Call/Text: 613-400-8424</a>
+                    <span class="hidden sm:inline mx-3 opacity-30">|</span>
+                    <span>Tue–Sun, 2pm–8pm</span>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-white/5 text-center text-xs text-[#888888]/50">
+                &copy; <span id="current-year"></span> Wavy Cuts. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Inject Services statically into the DOM
+        const servicesData = [
+            { title: "Hair Cut (Adult) + Beard Razor Finish (Cash)", desc: "A full haircut service for adults, including fades, tapers, or any requested style. This typically includes a lineup and finishing touches for a clean, sharp look.", price: "CA$40.00", duration: "30 min" },
+            { title: "Haircut Adult (Debit or Credit)", desc: "", price: "CA$42.00", duration: "30 min" },
+            { title: "Hair Cut (Kids) (Cash)", desc: "A haircut for children, designed to be quick and comfortable. It includes basic styles, fades, or trims tailored to the child’s preferences or parental requests.", price: "CA$30.00", duration: "30 min" },
+            { title: "Haircut Kids (Debit or Credit)", desc: "", price: "CA$32.00", duration: "30 min" },
+            { title: "Outline with Razor Finish (Cash)", desc: "", price: "CA$25.00", duration: "25 min" },
+            { title: "Outline with Razor Finish (Debit or Credit)", desc: "This service includes the use of hair fibers, sprays, or semi-permanent color to sharpen and define the hairline, beard, or other areas, giving a fuller and more polished look.", price: "CA$27.00", duration: "25 min" },
+            { title: "Hair cut + Henna Hair Coloring", desc: "Hair cut of your choice + a natural hair dye service using henna to enhance or change hair color. The price varies depending on hair length, color preferences, and application requirements.", price: "CA$55.00", duration: "1 hr" },
+            { title: "Hot Towel (Free Service)", desc: "A relaxing hot towel treatment often used before or after a shave or haircut to open pores, soften hair, and provide a soothing experience.", price: "Free", duration: "5 min" },
+            { title: "Hair Wash & Condition (Free Service)", desc: "A deep cleansing and conditioning treatment that removes dirt, oil, and product buildup. It helps refresh the scalp and hair, leaving it clean and manageable.", price: "Free", duration: "5 min" }
+        ];
+
+        const servicesContainer = document.getElementById('services-container');
+        servicesData.forEach((service, idx) => {
+            const delay = idx * 0.05;
+            servicesContainer.innerHTML += `
+                <div class="reveal-up group flex flex-col md:flex-row justify-between items-start md:items-center py-6 border-b border-white/5 hover:bg-[#111111]/30 transition-colors px-4 -mx-4 rounded-sm" style="transition-delay: ${delay}s">
+                    <div class="max-w-2xl pr-4">
+                        <h3 class="font-display text-xl font-semibold text-white group-hover:text-white transition-colors">${service.title}</h3>
+                        ${service.desc ? `<p class="text-[#888888] text-sm mt-2 leading-relaxed">${service.desc}</p>` : ''}
+                    </div>
+                    <div class="mt-4 md:mt-0 flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-8 shrink-0 w-full md:w-auto">
+                        <div class="text-left md:text-right w-full sm:w-auto flex flex-row sm:flex-col justify-between sm:justify-start items-center sm:items-end">
+                            <div class="text-white font-medium text-lg">${service.price}</div>
+                            <div class="text-[#888888] text-sm">${service.duration}</div>
+                        </div>
+                        <a href="https://www.instagram.com/wavymax.barber" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 sm:py-2 bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 rounded-sm text-sm whitespace-nowrap">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Setup Preloader and reveal logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            
+            // Hero Elements mapping
+            const heroElements = [
+                { id: 'hero-image', class: 'animate-hero-image' },
+                { id: 'hero-eyebrow', class: 'animate-hero-eyebrow' },
+                { id: 'hero-headline', class: 'animate-hero-headline' },
+                { id: 'hero-subtext', class: 'animate-hero-subtext' },
+                { id: 'hero-cta-btn', class: 'animate-hero-cta' },
+                { id: 'hero-cta-text', class: 'animate-hero-cta' },
+                { id: 'hero-trust', class: 'animate-hero-trust' },
+            ];
+
+            // Trigger animations after fake load (1500ms)
+            setTimeout(() => {
+                heroElements.forEach(item => {
+                    const el = document.getElementById(item.id);
+                    if(el) {
+                        el.classList.remove('opacity-0');
+                        el.classList.add(item.class);
+                    }
+                });
+                
+                // Show particle container and initialize
+                document.getElementById('particle-container').style.visibility = 'visible';
+                initParticleCanvas();
+
+                // Setup Intersection Observer for scrolling elements
+                initScrollObserver();
+
+            }, 1500);
+
+            // Fade out preloader (2100ms)
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => { preloader.style.display = 'none'; }, 600);
+            }, 2100);
+        });
+
+        // --- Intersection Observer Logic ---
+        function initScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            const elements = document.querySelectorAll('.reveal-up, .reveal-scale');
+            elements.forEach((el) => observer.observe(el));
+        }
+
+        // --- Particle Text Effect Logic ---
+        class Particle {
+            constructor() {
+                this.pos = { x: 0, y: 0 };
+                this.vel = { x: 0, y: 0 };
+                this.acc = { x: 0, y: 0 };
+                this.target = { x: 0, y: 0 };
+                this.closeEnoughTarget = 100;
+                this.maxSpeed = 1.0;
+                this.maxForce = 0.1;
+                this.particleSize = 10;
+                this.isKilled = false;
+                this.startColor = { r: 0, g: 0, b: 0 };
+                this.targetColor = { r: 0, g: 0, b: 0 };
+                this.colorWeight = 0;
+                this.colorBlendRate = 0.01;
+            }
+
+            move() {
+                let proximityMult = 1;
+                const distance = Math.sqrt(Math.pow(this.pos.x - this.target.x, 2) + Math.pow(this.pos.y - this.target.y, 2));
+
+                if (distance < this.closeEnoughTarget) {
+                    proximityMult = distance / this.closeEnoughTarget;
+                }
+
+                const towardsTarget = {
+                    x: this.target.x - this.pos.x,
+                    y: this.target.y - this.pos.y,
+                };
+
+                const magnitude = Math.sqrt(towardsTarget.x * towardsTarget.x + towardsTarget.y * towardsTarget.y);
+                if (magnitude > 0) {
+                    towardsTarget.x = (towardsTarget.x / magnitude) * this.maxSpeed * proximityMult;
+                    towardsTarget.y = (towardsTarget.y / magnitude) * this.maxSpeed * proximityMult;
+                }
+
+                const steer = {
+                    x: towardsTarget.x - this.vel.x,
+                    y: towardsTarget.y - this.vel.y,
+                };
+
+                const steerMagnitude = Math.sqrt(steer.x * steer.x + steer.y * steer.y);
+                if (steerMagnitude > 0) {
+                    steer.x = (steer.x / steerMagnitude) * this.maxForce;
+                    steer.y = (steer.y / steerMagnitude) * this.maxForce;
+                }
+
+                this.acc.x += steer.x;
+                this.acc.y += steer.y;
+
+                this.vel.x += this.acc.x;
+                this.vel.y += this.acc.y;
+                this.pos.x += this.vel.x;
+                this.pos.y += this.vel.y;
+                this.acc.x = 0;
+                this.acc.y = 0;
+            }
+
+            draw(ctx, drawAsPoints) {
+                if (this.colorWeight < 1.0) {
+                    this.colorWeight = Math.min(this.colorWeight + this.colorBlendRate, 1.0);
+                }
+
+                const currentColor = {
+                    r: Math.round(this.startColor.r + (this.targetColor.r - this.startColor.r) * this.colorWeight),
+                    g: Math.round(this.startColor.g + (this.targetColor.g - this.startColor.g) * this.colorWeight),
+                    b: Math.round(this.startColor.b + (this.targetColor.b - this.startColor.b) * this.colorWeight),
+                };
+
+                if (drawAsPoints) {
+                    ctx.fillStyle = `rgb(${currentColor.r}, ${currentColor.g}, ${currentColor.b})`;
+                    ctx.fillRect(this.pos.x, this.pos.y, 2, 2);
+                } else {
+                    ctx.fillStyle = `rgb(${currentColor.r}, ${currentColor.g}, ${currentColor.b})`;
+                    ctx.beginPath();
+                    ctx.arc(this.pos.x, this.pos.y, this.particleSize / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            kill(width, height) {
+                if (!this.isKilled) {
+                    const randomPos = this.generateRandomPos(width / 2, height / 2, (width + height) / 2);
+                    this.target.x = randomPos.x;
+                    this.target.y = randomPos.y;
+
+                    this.startColor = {
+                        r: this.startColor.r + (this.targetColor.r - this.startColor.r) * this.colorWeight,
+                        g: this.startColor.g + (this.targetColor.g - this.startColor.g) * this.colorWeight,
+                        b: this.startColor.b + (this.targetColor.b - this.startColor.b) * this.colorWeight,
+                    };
+                    this.targetColor = { r: 0, g: 0, b: 0 }; // Fade to black
+                    this.colorWeight = 0;
+
+                    this.isKilled = true;
+                }
+            }
+
+            generateRandomPos(x, y, mag) {
+                const randomX = Math.random() * 1000;
+                const randomY = Math.random() * 500;
+
+                const direction = {
+                    x: randomX - x,
+                    y: randomY - y,
+                };
+
+                const magnitude = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
+                if (magnitude > 0) {
+                    direction.x = (direction.x / magnitude) * mag;
+                    direction.y = (direction.y / magnitude) * mag;
+                }
+
+                return {
+                    x: x + direction.x,
+                    y: y + direction.y,
+                };
+            }
+        }
+
+        function initParticleCanvas() {
+            const words = ["WAVY CUTS", "FADES", "PRECISION", "STYLE"];
+            const canvas = document.getElementById('particle-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1000;
+            canvas.height = 500;
+
+            const particles = [];
+            let frameCount = 0;
+            let wordIndex = 0;
+            const mouse = { x: 0, y: 0, isPressed: false, isRightClick: false };
+            const pixelSteps = 6;
+            const drawAsPoints = true;
+
+            function nextWord(word) {
+                const offscreenCanvas = document.createElement("canvas");
+                offscreenCanvas.width = canvas.width;
+                offscreenCanvas.height = canvas.height;
+                const offscreenCtx = offscreenCanvas.getContext("2d");
+
+                offscreenCtx.fillStyle = "white";
+                offscreenCtx.font = "bold 100px Syncopate, sans-serif";
+                offscreenCtx.textAlign = "center";
+                offscreenCtx.textBaseline = "middle";
+                offscreenCtx.fillText(word, canvas.width / 2, canvas.height / 2);
+
+                const imageData = offscreenCtx.getImageData(0, 0, canvas.width, canvas.height);
+                const pixels = imageData.data;
+
+                const isWhite = Math.random() > 0.5;
+                const newColor = isWhite 
+                    ? { r: 255, g: 255, b: 255 } 
+                    : { r: 180, g: 180, b: 180 };
+
+                let particleIndex = 0;
+                const coordsIndexes = [];
+
+                for (let i = 0; i < pixels.length; i += pixelSteps * 4) {
+                    coordsIndexes.push(i);
+                }
+
+                // Shuffle indexes
+                for (let i = coordsIndexes.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [coordsIndexes[i], coordsIndexes[j]] = [coordsIndexes[j], coordsIndexes[i]];
+                }
+
+                for (const coordIndex of coordsIndexes) {
+                    const alpha = pixels[coordIndex + 3];
+
+                    if (alpha > 0) {
+                        const x = (coordIndex / 4) % canvas.width;
+                        const y = Math.floor(coordIndex / 4 / canvas.width);
+
+                        let particle;
+
+                        if (particleIndex < particles.length) {
+                            particle = particles[particleIndex];
+                            particle.isKilled = false;
+                            particleIndex++;
+                        } else {
+                            particle = new Particle();
+                            const randomPos = particle.generateRandomPos(canvas.width / 2, canvas.height / 2, (canvas.width + canvas.height) / 2);
+                            particle.pos.x = randomPos.x;
+                            particle.pos.y = randomPos.y;
+
+                            particle.maxSpeed = Math.random() * 6 + 4;
+                            particle.maxForce = particle.maxSpeed * 0.05;
+                            particle.particleSize = Math.random() * 6 + 6;
+                            particle.colorBlendRate = Math.random() * 0.0275 + 0.0025;
+
+                            particles.push(particle);
+                        }
+
+                        particle.startColor = {
+                            r: particle.startColor.r + (particle.targetColor.r - particle.startColor.r) * particle.colorWeight,
+                            g: particle.startColor.g + (particle.targetColor.g - particle.startColor.g) * particle.colorWeight,
+                            b: particle.startColor.b + (particle.targetColor.b - particle.startColor.b) * particle.colorWeight,
+                        };
+                        particle.targetColor = newColor;
+                        particle.colorWeight = 0;
+
+                        particle.target.x = x;
+                        particle.target.y = y;
+                    }
+                }
+
+                for (let i = particleIndex; i < particles.length; i++) {
+                    particles[i].kill(canvas.width, canvas.height);
+                }
+            }
+
+            function animate() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const particle = particles[i];
+                    particle.move();
+                    particle.draw(ctx, drawAsPoints);
+
+                    if (particle.isKilled) {
+                        if (
+                            particle.pos.x < 0 ||
+                            particle.pos.x > canvas.width ||
+                            particle.pos.y < 0 ||
+                            particle.pos.y > canvas.height
+                        ) {
+                            particles.splice(i, 1);
+                        }
+                    }
+                }
+
+                if (mouse.isPressed && mouse.isRightClick) {
+                    particles.forEach((particle) => {
+                        const distance = Math.sqrt(
+                            Math.pow(particle.pos.x - mouse.x, 2) + Math.pow(particle.pos.y - mouse.y, 2),
+                        );
+                        if (distance < 50) {
+                            particle.kill(canvas.width, canvas.height);
+                        }
+                    });
+                }
+
+                frameCount++;
+                if (frameCount % 240 === 0) {
+                    wordIndex = (wordIndex + 1) % words.length;
+                    nextWord(words[wordIndex]);
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            // Bind events
+            canvas.addEventListener("mousedown", (e) => {
+                mouse.isPressed = true;
+                mouse.isRightClick = e.button === 2;
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+                mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            });
+
+            canvas.addEventListener("mouseup", () => {
+                mouse.isPressed = false;
+                mouse.isRightClick = false;
+            });
+
+            canvas.addEventListener("mousemove", (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+                mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            });
+
+            canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+            // Start animation
+            nextWord(words[0]);
+            animate();
+        }
+    </script>
+</body>
+</html>
